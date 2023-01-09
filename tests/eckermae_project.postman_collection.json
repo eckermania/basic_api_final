@@ -1,0 +1,2509 @@
+{
+	"info": {
+		"_postman_id": "ae59acee-8b7d-4a9f-b373-b75acf354d2a",
+		"name": "Final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5392491"
+	},
+	"item": [
+		{
+			"name": "Get All Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one user exists\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set fabric id environment variable from response",
+							"pm.environment.set(\"fabric1_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"blue\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"cotton\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(3);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"cotton\",\n    \"color\": \"blue\",\n    \"yards\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Method Not Allowed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"405 status code\", function () {",
+							"    //Check for 405 status code",
+							"    pm.response.to.have.status(405);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"cotton\",\n    \"color\": \"blue\",\n    \"yards\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set fabric id environment variable from response",
+							"pm.environment.set(\"fabric2_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"pink\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"tencel\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(1);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"tencel\",\n    \"color\": \"pink\",\n    \"yards\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set fabric id environment variable from response",
+							"pm.environment.set(\"fabric3_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"purple\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"silk\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(2);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"silk\",\n    \"color\": \"purple\",\n    \"yards\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set fabric id environment variable from response",
+							"pm.environment.set(\"fabric4_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"green\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"rayon\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(4);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"rayon\",\n    \"color\": \"green\",\n    \"yards\": 4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set fabric id environment variable from response",
+							"pm.environment.set(\"fabric5_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"red\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"cotton\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(2);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"cotton\",\n    \"color\": \"red\",\n    \"yards\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set fabric id environment variable from response",
+							"pm.environment.set(\"fabric6_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"white\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"bamboo\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(1);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"bamboo\",\n    \"color\": \"white\",\n    \"yards\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Fabric (missing attribute)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    //Check for 400 status code",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     //Check for appropriate error message",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request object is missing at least one of the required attributes\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"cotton\",\n    \"color\": \"blue\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Fabric1 (PUT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"blue\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"cotton\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(2);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"yards\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Fabric2 (PATCH)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"rainbow\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"silk\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(3);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"substrate\": \"silk\",\n    \"color\": \"rainbow\",\n    \"yards\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Fabrics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one fabric exists\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Fabric",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"blue\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"cotton\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(2);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern1 with jwt1/user_id1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set pattern id environment variable from response",
+							"pm.environment.set(\"pattern1_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Jenny\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"overalls\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Closet Core\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.equal(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Jenny\",\n    \"garment\": \"overalls\",\n    \"company\": \"Closet Core\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern2 with jwt1/user_id1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set pattern id environment variable from response",
+							"pm.environment.set(\"pattern2_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Hello Gorgeous\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"shirt\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Pattern Emporium\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.equal(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Hello Gorgeous\",\n    \"garment\": \"shirt\",\n    \"company\": \"Pattern Emporium\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern3 with jwt1/user_id1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set pattern id environment variable from response",
+							"pm.environment.set(\"pattern3_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Orchidee\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"dress\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Deer & Doe\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.equal(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Orchidee\",\n    \"garment\": \"dress\",\n    \"company\": \"Deer & Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern4 with jwt1/user_id1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set pattern id environment variable from response",
+							"pm.environment.set(\"pattern4_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Agave\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"skirt\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Deer & Doe\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.equal(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Agave\",\n    \"garment\": \"skirt\",\n    \"company\": \"Deer & Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern5 with jwt1/user_id1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set pattern id environment variable from response",
+							"pm.environment.set(\"pattern5_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Pine Cove\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"pajamas\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Itch to Stitch\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.equal(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Pine Cove\",\n    \"garment\": \"pajamas\",\n    \"company\": \"Itch to Stitch\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern6 with jwt1/user_id1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Set pattern id environment variable from response",
+							"pm.environment.set(\"pattern6_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    //Check for 201 status code",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Zadie\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"jumpsuit\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Paper Theory Patterns\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.equal(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Zadie\",\n    \"garment\": \"jumpsuit\",\n    \"company\": \"Paper Theory Patterns\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Patterns for user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one pattern exists\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pattern1 with jwt1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Jenny\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"overalls\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Closet Core\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deny Attempt to Get Pattern1 with jwt2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    //Check for 403 status code",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern1 with Incorrect Accept Header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    //Check for 406 status code",
+							"    pm.response.to.have.status(406);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Jenny\",\n    \"garment\": \"overalls\",\n    \"company\": \"Closet Core\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern (missing Auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"401 status code\", function () {",
+							"    //Check for 401 status code",
+							"    pm.response.to.have.status(401);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Agave\",\n    \"garment\": \"skirt\",\n    \"company\": \"Deer & Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pattern (invalid JWT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"401 status code\", function () {",
+							"    //Check for 401 status code",
+							"    pm.response.to.have.status(401);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{invalid_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Agave\",\n    \"garment\": \"skirt\",\n    \"company\": \"Deer & Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pattern1 with jwt1/user_id1  (PUT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Jenny\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"dress\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Closet Core\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"garment\": \"dress\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deny Attempt to Update Pattern1 with jwt2  (PUT)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    //Check for 403 status code",
+							"    pm.response.to.have.status(403);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"garment\": \"dress\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pattern2 with jwt1/user_id1  (PATCH)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Long Goodbye\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"shirt\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Pattern Emporium\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Long Goodbye\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Fabric1 to Pattern1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Jenny\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"dress\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Closet Core\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(Object.keys(pm.response.json())[\"fabric\"]).to.not.eq(null);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}",
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Pattern1 Added to Fabric1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"blue\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"cotton\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(2);",
+							"   pm.expect(Object.keys(pm.response.json()[\"patterns\"]).length).to.be.at.least(1);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Fabric1 from Pattern1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 status code\", function () {",
+							"    //Check for 204 status code",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}",
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Pattern1 Removed from Fabric1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"blue\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"cotton\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(2);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Fabric2 to Pattern2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Long Goodbye\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"shirt\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Pattern Emporium\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern2_id}}/fabrics/{{fabric2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern2_id}}",
+						"fabrics",
+						"{{fabric2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Fabric1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Nonexistent Fabric",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 not found\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.equal(\"No fabric with this fabric_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Nonexistent Fabric",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 not found\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.equal(\"No fabric with this fabric_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pattern1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Nonexistent Pattern",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 not found\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.equal(\"No pattern with this pattern_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Nonexistent Pattern",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 not found\", function () {",
+							"    //Check for appropriate 404 status code",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     //Check for appropriate error message",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.equal(\"No pattern with this pattern_id exists\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deny Attempt to Delete Pattern2 with jwt2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    //Check for 403 status code",
+							"    pm.response.to.have.status(403);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pattern2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Pattern2 Removed from Fabric2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"color\"]).to.eq(\"rainbow\");",
+							"   pm.expect(pm.response.json()[\"substrate\"]).to.eq(\"silk\");",
+							"   pm.expect(pm.response.json()[\"yards\"]).to.eq(3);",
+							"   pm.expect(pm.response.json()[\"patterns\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/fabrics/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Fabric2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Fabric3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Confirm Fabric3 Removed from Pattern3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    //Check for 200 status code",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"   //Check if the response content is valid and matches the expected values",
+							"   pm.expect(pm.response.json()[\"name\"]).to.eq(\"Orchidee\");",
+							"   pm.expect(pm.response.json()[\"garment\"]).to.eq(\"dress\");",
+							"   pm.expect(pm.response.json()[\"company\"]).to.eq(\"Deer & Doe\");",
+							"   pm.expect(pm.response.json()[\"maker\"]).to.eq(pm.environment.get(\"user_id1\"));",
+							"   pm.expect(pm.response.json()[\"fabric\"]).to.deep.equal([]);",
+							"   //Check if the self url is correct",
+							"   const self_url = pm.environment.get(\"app_url\") + \"/patterns/\" + pm.response.json()[\"id\"];",
+							"   pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pattern3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Fabric4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric4_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric4_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pattern4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern4_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern4_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pattern5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern5_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern5_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pattern6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/patterns/{{pattern6_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"patterns",
+						"{{pattern6_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Fabric5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric5_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric5_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Fabric6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/fabrics/{{fabric6_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"fabrics",
+						"{{fabric6_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
